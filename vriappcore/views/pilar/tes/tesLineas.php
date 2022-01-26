@@ -9,6 +9,8 @@
 	<?php
 		$flag=1;
 		foreach($lineas->result() as $row){
+			$count=$this->dbPilar->getSnapView("docLineas","IdLinea=$row->Id  AND estado='2'")->num_rows();
+			if($count>=4){ //se muestra las lineas que solo tienen mas de 4 docentes activos -unuv1.0
 	 ?>
 		<div class="panel panel-default">
 			<div class="panel-heading">
@@ -33,6 +35,7 @@
 		</div>
 	<?php
 		$flag++;
+		 	}
 		}
 	?>
 	</div>

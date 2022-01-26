@@ -16,7 +16,7 @@
 
 // Cambiar a su dominio
 
-$config['base_url']     = 'http://pilar.unu.edu.pe/unutesting/'; // modificar testing-produccion
+$config['base_url']     = 'http://localhost:8080/unutesting/'; // modificar testing-produccion
 $config['index_page']   = '';
 $config['uri_protocol']	= 'AUTO';
 

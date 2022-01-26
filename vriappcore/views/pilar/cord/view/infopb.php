@@ -12,24 +12,27 @@
 	<div class="modal-body">
 		<div>
 			<?php 
-				if ($tram->Tipo==1) {
+				if ($tram->Tipo==1 && $tram->Estado<=2 ) {
 					$doc1=$this->dbRepo->inDocente("$tram->IdJurado4");
 					echo "Asesor de Tesis: $doc1 <br>";
 					if($tram->IdTesista2)echo "<br><b class='text-danger'> NOTA : Este proyecto tiene 2 Tesistas</b>";
-				}
-				if ($tram->Tipo>=2){
+				} else
+				if ($tram->Tipo>=1 and $tram->Estado>2){
+					$doc1=$this->dbRepo->inDocente("$tram->IdJurado4");
+					echo "Asesor de Tesis: $doc1 <br>";
+					if($tram->IdTesista2)echo "<br><b class='text-danger'> NOTA : Este proyecto tiene 2 Tesistas</b>";
 					$doc1=$this->dbRepo->getSnapRow('tblDocentes',"Id=$tram->IdJurado1");
 					$doc2=$this->dbRepo->getSnapRow('tblDocentes',"Id=$tram->IdJurado2");
 					$doc3=$this->dbRepo->getSnapRow('tblDocentes',"Id=$tram->IdJurado3");
 					$doc4=$this->dbRepo->getSnapRow('tblDocentes',"Id=$tram->IdJurado4");
-					echo "<br>Presidente :  $doc1->Apellidos, $doc1->Nombres |Tel. $doc1->NroCelular | $doc1->Correo";
-					echo "<br>Jurado 1 :  $doc2->Apellidos, $doc2->Nombres |Tel. $doc2->NroCelular | $doc2->Correo";
-					echo "<br>Jurado 2 :  $doc3->Apellidos, $doc3->Nombres |Tel. $doc3->NroCelular | $doc3->Correo";
-					echo "<br>Jurado 3 :  $doc4->Apellidos, $doc4->Nombres |Tel. $doc4->NroCelular | $doc4->Correo <br>";
+					echo "<br><dt>Presidente : $doc1->Apellidos, $doc1->Nombres</dt><dt>Celular: $doc1->NroCelular </dt><dt>Correo: $doc1->Correo</dt></dl>";
+						echo "<br><dt>Jurado 1 :  $doc2->Apellidos, $doc2->Nombres</dt><dt>Celular: $doc2->NroCelular </dt><dt>Correo: $doc2->Correo</dt>";
+					echo "<br><dt>Jurado 2 :  $doc3->Apellidos, $doc3->Nombres</dt><dt>Celular: $doc3->NroCelular</dt><dt>Correo: $doc3->Correo</dt>";
+					//echo "<br><dt>Jurad
 				}
-				if($tram->IdTesista2)echo "<br><b class='text-danger'> NOTA : Este proyecto tiene 2 Tesistas</b>";
+				//if($tram->IdTesista2)echo "<br><b class='text-danger'> NOTA : Este proyecto tiene 2 Tesistas</b>"; comentado unuv1.0
 
-				echo "Linea de Investigación:".$this->dbRepo->inLineaInv($tram->IdLinea);
+				//echo "Linea de Investigación:".$this->dbRepo->inLineaInv($tram->IdLinea); comentado unuv1.0
 			 ?>
 		</div>
 	</div>

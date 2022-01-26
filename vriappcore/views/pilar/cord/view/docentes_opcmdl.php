@@ -3,12 +3,12 @@
  ?>
 <!-- Modal content-->
 <div class="modal-content">
-	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal">&times;</button>
-		<center><h4 class="modal-title">Informacion Docente</h4></center>
+	<div class="modal-header" style="background: #920738; color:white">
+	  <button class="close" data-dismiss="modal" style="color:white">&times;</button>
+	  <h4 class="modal-title">  Cambiar Estado  </h4>
 	</div>
 	<div class="modal-body" id='chDoc'>
-		<h5><b>Señor Coordinador,</b> recuerde que toda modificación es bajo su responsabilidad, y con la debida documentación del caso.</h5>
+		<h5>Recuerde que toda modificación es bajo su responsabilidad, y con la debida documentación del caso.</h5>
 		<form class="form-horizontal" method="post" id="formUpStaDoc" name="formUpStaDoc" >
 		<fieldset>
 			<div class="form-group">
@@ -33,15 +33,13 @@
 			<div class="form-group"> 
 				<label class="col-md-4 control-label" >Documento</label>  
 				<div class="col-md-6">
-					<input id="just" name="just" type="text" placeholder="R.D. N° 0123 - F - UNAP" class="form-control input-md" required>
-					<span class="help-block">Motivo del Cambio</span>  
+					<input id="just" name="just" type="text" placeholder="R.D. N° 0123 - F - UNAP" class="form-control input-md" required> 
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-md-4 control-label" for="textarea">Detalle</label>
 				<div class="col-md-8">                     
-					<input class="form-control" id="detalle" name="detalle" placeholder="Justificación del cambio de Estado al Docente." required></input>
-					<span class="help-block">Ejem. El docente fue elegido Asesor de Investigación de la escuela profesional.</span>  
+					<textarea class="form-control" id="detalle" name="detalle" placeholder="Justificación del cambio de Estado al Docente." rows="4" required></textarea>  
 				</div>
 			</div>
 			<!-- Button -->

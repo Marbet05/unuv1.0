@@ -7,37 +7,107 @@
 	$sess = $this->gensession->GetSessionData(PILAR_CORDIS); //agregado unuv1.0 - estado sorteo
 ?>
 <h3>Proyectos de Tesis :: <small><?php  echo $Carrera; ?></small></h3>
+<?php
+ $sess = $this->gensession->GetSessionData(PILAR_CORDIS);
+    if( $tipo <= 2 && $tipo!=0 ) {
+
+        $ini = ($tipo==1)? 1 : 10;
+        $fin = ($tipo==1)? 8 : 13;
+        // OJO :
+        // Estado = 14 para los sustentados completos
+ $procesos = array (
+        0 => "",
+        1 => "Revisión de Formato",
+        2 => "Para Asesor",
+        3 => "Para Sorteo",
+        4 => "Para Revisión (1)",
+        5 => "Para Revisión (2)",     // 05
+        6 => "Para Revisión (3)", 
+        7 => "Dictaminacion",
+        8 => "Proy. Aprobado",      // 06
+        10 => "Tram borr",      // 10
+        11 => "Borr nuevo",     // 11
+        12 => "Revis borr",
+        13 => "Gen Memos",
+        14 => "Susten"
+    );
+
+ $onsubm = "sndLoad('Cordinads/innerTrams/$tipo', new FormData(fsee) )";
+?>
 <div class="col-md-12">
-	<h4>Listado de Proyectos</h4>
-	<small id='respcord'></small>
-	<table class="table table-bordered">
-		<thead>
-			<tr>
-				<th>Num</th>
-				<th align="center">Código</th>
-				<th>Fecha</th>
-				<th align="center">Estado</th>
-				<th align="center">Revisiones</th>
-				<th align="center">Opciones</th>
-			</tr>
-		</thead>
-		<tbody>
+	<div class="col-md-12">
+    <form id="fsee" class="form-horizontal" onsubmit="<?=$onsubm?>; return false">
+        <fieldset>
+            <!-- Select Basic -->
+            <div class="form-group no-print">
+                <input type="hidden" name="tipo" value="<?=$tipo?>"> <!-- Kind of view -->
+                <label class="col-md-1 control-label" for="selectbasic"> ESTADO </label>
+                <div class="col-md-2">
+                    <select id="estado" name="estado" class="form-control" onchange="<?=$onsubm?>" autofocus> <!-- required -->
+                        <option value="0">(todos)</option>
+                        <?php
+                        for( $Id=$ini; $Id<=$fin ; $Id++  )
+                        {
+                            $issel = ($Id==$estado)? "selected" : "";
+                            $estado1 = $procesos[ ($Id >15 or $Id <0)? 0:$Id ];
+                            echo "<option value=$Id $issel> $estado1 </option>";
+                        }
+                        ?>
+                    </select>
+                </div>               
+
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+<?php } ?>
+</div>
+	<table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+      	<th align="center">Nº</th>
+		<th align="center">Código</th>
+		<th align="center">Fecha</th>
+		<th align="center">Estado</th>
+		<th align="center">Revisiones</th>
+		<th align="center">Opciones</th>
+      </tr>
+    </thead>
+    <tbody>
 		<?php 
-			$pyts=$this->dbPilar->getTable("tesTramites","IdCarrera='$IdCarrera' AND  Tipo='1' ORDER BY Estado ASC , FechModif DESC ");
-			$i=1;  
-			// popUp con Id Tipo
-				$nro = $pyts->num_rows();
-			foreach($pyts->result() as $row){
-				$rowi=$this->dbPilar->getSnapRow("tesTramsDet","IdTramite='$row->Id' ORDER BY Iteracion desc"); 
-		        $estado = "";
-				$archi = base_url("/repositor/docs/$rowi->Archivo");
-				$actap = base_url("pilar/tesistas/actaProy/$rowi->Id");
-				$opt = "<a href='$archi' class='btn btn-xs btn-info no-print' target=_blank> ver PDF </a>";
+		$nro = $tproys->num_rows();
+    $proceclr = array(
+        0 => "",
+        1 => "btn-success",
+        2 => "btn-primary",
+        3 => "btn-danger",
+        4 => "btn-success",
+        5 => "btn-warning",
+        6 => "btn-default",
+        10 => "btn-danger",
+        11 => "btn-warning",
+        12 => "btn-success",
+        13 => "btn-info",
+        14 => "btn-default"
+    );
+			
+		foreach( $tproys->result() as $row ) 
+   		{
+	    	$rowi=$this->dbPilar->getSnapRow("tesTramsDet","IdTramite='$row->Id' ORDER BY Iteracion desc");       
+			$diasp  = mlDiasTranscHoy( $row->FechModif );
+			$estado = "";
+			$archi = base_url("/repositor/docs/$rowi->Archivo");
+			$actap = base_url("pilar/tesistas/actaProy/$rowi->Id");
+			$opt = "";
+			
+			if( $row->Tipo == 1 ) 
+        	{	
 				switch ($row->Estado) {
 					case 1:
-						// $opt="<a href='$archi' class='btn btn-xs btn-info no-print' target=_blank> ver PDF </a> | ";
+						 $opt="<a href='$archi' class='btn btn-xs btn-info no-print' target=_blank> ver PDF </a> | ";
 						//$opt .= " |  <button onclick=\"pyDirect($nro,$row->Id)\" class='btn btn-xs btn-warning'> Enviar al Asesor</button> ";
-						$opt .= " |  <button  onclick=\"jsLoadModalCord($row->Id,'cordinads/execEnvia/')\" class='btn btn-warning btn-xs'> Enviar al Asesor</button> "; //Modificacion unuv1.0 - Estado enviar proyecto al Asesor
+						$opt .= "  <button  onclick=\"jsLoadModalCord($row->Id,'cordinads/execEnvia/')\" class='btn btn-warning btn-xs'> Enviar al Asesor</button>  | "; //Modificacion unuv1.0 - Estado enviar proyecto al Asesor
 						$opt.="<a href='javascript:void(0)' onclick=\"jsLoadModalCord($row->Id,'cordinads/execRechaza/')\" class='btn btn-danger btn-xs'>Rechazar</a>";	//Modificacion unuv1.0 - Estado rechazar proyecto por formato
 						$estado="Revisión de Formato";
 						break;
@@ -49,7 +119,7 @@
 						//Agregado unuv1.0 - Estado sorteo de jurados
 						if($sess->userLevel==4)
 						{ 
-							$opt.=" |  <a href='javascript:void(0)' onclick=popLoad(\"cordinads/execSorteo/$row->Id\",$nro) class='btn btn-xs btn-warning'> Sorteo</a>";
+							$opt.=" <a href='javascript:void(0)' onclick=popLoad(\"cordinads/execSorteo/$row->Id\",$nro) class='btn btn-xs btn-warning'> Sorteo</a>";
 						}
 						// $opt .= " | <button onclick='popLoad(\"admin/execSorteo/$row->Id\",$nro)' class='btn btn-xs btn-warning'> Sorteo </button>";
 						$estado="Sorteo de Jurados"; 
@@ -57,7 +127,7 @@
 					case 4:
 						$opt="<a href='javascript:void(0)' onclick=\"jsLoadModalCord($row->Id,'cordinads/vwProyectosMemos/')\" class='btn btn-info btn-xs'>Memo</a>";
 						if($sess->userLevel==4){
-							$opt.= " |  <button onclick='popLoad(\"cordinads/execAprobPy/$row->Id\",$nro)' class='btn btn-xs btn-warning'> Dictaminar </button>";
+							$opt.= "  <button onclick='popLoad(\"cordinads/execAprobPy/$row->Id\",$nro)' class='btn btn-xs btn-warning'> Dictaminar </button>";
 						}	//agregado unuv1.0 - Estado revision 1			 
 						$estado="Revisón por Jurados (1)";
 						break;
@@ -91,6 +161,12 @@
 						$estado=" Eroor.....! Comunicar!";
 						break;
 				}
+
+        }
+         else if( $row->Tipo == 0 )
+             {
+                $estado='Rechazado';
+             }
 				$fech=strtotime($row->FechModif);
 				$fech= date("Y-m-d",$fech);
 				echo "<tr id='item".$nro."'>
@@ -109,7 +185,7 @@
 		?>
 		</tbody>
 	</table>
-</div>
+
 
 <!--Agregado unuv1.0 - sorteo de jurado------->
 <div id="dlgPan" class="modal" role="dialog">

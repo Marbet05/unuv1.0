@@ -71,7 +71,7 @@
         <div class="titulo">Presentación</div>
         <p class="description">
             La Universidad Nacional de Ucayali mediante RESOLUCIÓN Nº377-2020-UNU-CU-R <b>“Convenio Específico de Cooperación Interinstitucional entre la Universidad Nacional de Ucayali y la Universidad Nacional del Altiplano de Puno Nº007-2020/UNU-UNA”</b> pone a disposición la Plataforma <i>PILAR</i>  
-            para Docentes, Tesistas y Coordinadores; contando con la información disponible para realizar la
+            para Docentes, Tesistas y Comisión GyT; contando con la información disponible para realizar la
             subida, calificacion, revisión y posterior dictaminación de proyectos de investigación de pregrado
             conducentes a la obtención del título profesional. <!-- // Modificado version 1.0 -->
         </p>
@@ -83,7 +83,7 @@
                 <a id="2doc" onclick="openNav(this.id)" class="btn btn-default btn-user bg-green" role="button"><span class="glyphicon glyphicon-list-alt"></span> <br/>Docente</a>
               </div>
               <div class="col-xs-12 col-md-4 btn-acces-pilar">
-                <a id="3coord" onclick="openNav(this.id)" class="btn btn-default btn-user bg-red-ligth" role="button"><span class="glyphicon glyphicon-question-sign"></span> <br/>Coordinador</a>
+                <a id="3coord" onclick="openNav(this.id)" class="btn btn-default btn-user bg-red-ligth" role="button"><span class="glyphicon glyphicon-question-sign"></span> <br/>Comisión GyT</a>
               </div>
         </div>
         <br>
@@ -208,7 +208,7 @@
         <div class="login-page">
           <div class="form">
             <img class="img-responsive login-logo" src="<?php echo base_url("vriadds/pilar/imag/pilar-cord.png");?>">
-            <h4 class="login-title-cord">Área de Coordinadores</h4>
+            <h4 class="login-title-cord">Área de Comisión GyT</h4>
             <div id="cmsg" class="alert alert-danger"><span class="glyphicon glyphicon-exclamation-sign"></span> </div>
             <form class="register-form">
               <input type="email" placeholder="correo@unap.edu.pe" required=""/>
@@ -222,7 +222,7 @@
               <input name="user" type="text" placeholder="usuario(a)" required=""/>
               <input name="pass" type="password" placeholder="contraseña" required=""/>
               <button class="login-btn-coord">Ingresar</button>
-              <p class="message "><i>Coordinadoor Nuevo?</i> <a  rel="nofollow" onclick="register()" href="#">Crear una Cuenta Nueva </a></p>
+              
             </form>
             <a class="text-center" onclick="closeNav()"><span class="glyphicon glyphicon-remove-circle gi-1x"></span></a>
           </div>

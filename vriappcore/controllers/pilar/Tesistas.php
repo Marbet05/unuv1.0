@@ -1565,8 +1565,8 @@ class Tesistas extends CI_Controller {
         $sess = $this->gensession->GetData();
 
         // nombre BD estricto
-        $dbrep = "vriunap_absmain_testing"; // modificar testing-produccion
-        $dbpil = "vriunap_pilar3_testing"; // modificar testing-produccion
+        $dbrep = "vriunap_absmain"; // modificar testing-produccion
+        $dbpil = "vriunap_pilar3"; // modificar testing-produccion
 
         // first item
         echo "<option value='' disabled selected> seleccione </option>";

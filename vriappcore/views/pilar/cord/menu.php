@@ -29,6 +29,9 @@
 		<!--	<a href="javascript:void(0)" onclick="" class="list-group-item"><span class="glyphicon glyphicon glyphicon-calendar"></span> Cambio de Jurado</a> 
 			<a href="javascript:void(0)"  onclick="lodPanel('panelCord','cordinads/vwReportes')" class="list-group-item"><span class="glyphicon glyphicon-align-justify"></span> Reportes </a> Modificado unuv1.0-->
 			<br>
+			<a href="javascript:void(0)"  onclick="lodPanel('panelCord','cordinads/vwReportes')" class="list-group-item"><span class="glyphicon glyphicon-align-justify"></span> Reportes </a>
+			<br>
+			 <a target="_blank" href="<?php echo base_url("vriadds/pilar/doc/Manual de coordinador 1.0.pdf");?>" class="list-group-item blink"><span class="glyphicon glyphicon-book"></span> Manual de Coordinador</a>
 			<a href="javascript:void(0)" onclick="lodPanel('panelCord','cordinads/vwLogCordinador')" class="list-group-item bg-info"><span class="glyphicon glyphicon-book"></span> Historial de Actividades</a>
 			<?php }
 			if ($sess->userLevel==3) { ?>

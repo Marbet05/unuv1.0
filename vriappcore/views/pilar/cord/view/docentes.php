@@ -8,7 +8,7 @@
 <h3>Docentes de la Escuela Profesional de <small><?php  echo $Carrera; ?></small></h3>
 <div class="col-md-12">
 	<h4>Listado de Docentes</h4>
-	<table class="table table-bordered">
+	<table class="table table-bordered table-hover">
 		<thead>
 			<tr>
 				<th>Num</th>

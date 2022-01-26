@@ -616,21 +616,28 @@ class Docentes extends CI_Controller {
 				'FechModif' => mlCurrentDate()
 			), $idtram );
             $msg  = "<b>Saludos</b><br><br>El Asesor que Ud. eligió, ha aceptado su proyecto con codigo <b>".$tram->Codigo
-              ."</b> y en un máximo de 5 dias calendarios serán sorteados sus jurados";		
+              ."</b> y en un máximo de 5 dias calendarios serán sorteados sus jurados. ";		
 
 			 //------------------Correo a los tesistas ------------- modificacion unuv1.0
              if($tram->IdTesista2 !=0)
              {
                $mail = $this->dbPilar->inCorreo( $tram->IdTesista1);
                $mail2 = $this->dbPilar->inCorreo( $tram->IdTesista2);
+               $cel= $this->dbPilar->inCelTesista( $tram->IdTesista1);
+               $cel2= $this->dbPilar->inCelTesista( $tram->IdTesista2);
                $this->logCorreo( $sess->userId, $mail, "Aceptación de Asesor", $msg );
                $this->logCorreo( $sess->userId, $mail2, "Aceptación de Asesor", $msg );
+               $a=$this->notiCelu($cel,2);
+               $a=$a." - ".$this->notiCelu($cel2,2);
              }
            else
              {
                $mail = $this->dbPilar->inCorreo( $tram->IdTesista1);
+                $cel= $this->dbPilar->inCelTesista( $tram->IdTesista1);
                $this->logCorreo( $sess->userId, $mail, "Aceptación de Asesor", $msg );
+               $a=$this->notiCelu($cel,2);
              }
+             $msg=$msg.$a;
            //........................................
 			$this->logTramites( $tram->Id, "Aceptación del Asesor", $msg );
 
@@ -658,38 +665,31 @@ class Docentes extends CI_Controller {
         if($event!=10){
             echo " <button onclick='closeDlg(\"docentes/infoTrams/1\")' type='button' class='btn btn-danger'> [x] Salir </button>";
         }
-            /*$this->dbPilar->Update( "tesTramites", array(
-				'Estado'    => 0,
-                'Tipo'      => 0,
-				'FechModif' => mlCurrentDate()
-			), $idtram );
-
-
-            $mail = $this->dbPilar->inCorreo($tram->IdTesista1);
-			$msg  = "El Asesor ha rechazado su proyecto de tesis "
-				  . "por lo que deberá cambiarlo o coordinar personalmente.";
-
-            $this->logCorreo( $sess->userId, $mail, "Rechazo del Asesor", $msg );
-			$this->logTramites( $tram->Id, "Rechazo del Asesor", $msg );
-
-            echo "<b> Proyecto Rechazado </b><br>";
-            echo "Se procede con notificar al tesista(s) para que realice el cambio de Jurado.";
-            echo "<br><br>"; 
-        
-
-		// mensaje general con refrezcado de ventana
-		//
-		echo "<button onclick='closeDlg(\"docentes/infoTrams/1\")' type='button' class='btn btn-danger'> [x] Cerrar Ventana </button>";//Comentando unuv1.0 - estado rechazo proyecto*/
+            
 	}
 
 
-    /*
-    public function vex()
+    public function notiCelu($cel,$tip)
     {
-        $this->gensession->IsLoggedAccess();
-		$sess = $this->gensession->GetData();
-        print_r( $sess );
-    }*/
+     $this->load->library('apismss'); 
+     $number   = "0051$cel";
+     if($tip==1){ // Tesista : mensaje rechazo del proyecto
+       $mensaje  = "UNU -PILAR \nEstimad@ Tesista su proyecto fue rechazado por su Asesor, revisar su correo para mas detalles del rechazo. \nDebera corregir y coordinar personalmente para realizar nuevamente su tramite en la plataforma PILAR  en http://pilar.unu.edu.pe/unu/pilar  \n\n".date("d-m-Y")."\nPlataforma PILAR.";
+    }
+    else if($tip==2){
+       $mensaje  = "UNU PILAR \nEstimad@ Tesista el Asesor que Ud. eligió, aceptó su proyecto y en un máximo de 5 dias calendarios serán sorteados sus jurados.  \n\n".date("d-m-Y")."\nPILAR.";
+    }   
+    else{
+       $mensaje  = "UNU PILAR \nEstimad@ Docente se le recuerda revisar, la plataforma PILAR en http://pilar.unu.edu.pe/unu/pilar y verificar los proyectos y borradores pendientes.\n\n".date("d-m-Y")."\nPILAR.";
+    }
+    $result   = $this->apismss->sendMessageToNumber2($number,$mensaje);
+
+        if ($result) {
+           return "Mensaje Enviado al $number";
+        }else{
+           return  "Error al enviar mensaje : $number";
+        }
+    }
 
 
      //Agregado unuv1.0 - Rechazo del proyecto 
@@ -712,21 +712,27 @@ class Docentes extends CI_Controller {
          
          //------------------Correo a los tesistas -------------
          $msgEnviar  = "El Asesor ha rechazado su proyecto de tesis <b>".$tram->Codigo
-               ."</b> por los siguientes motivos : <br>      ".$msg." <br><br> Deberá cambiarlo y coordinar personalmente para realizar nuevamente su tramite en la plataforma PILAR.";
+               ."</b> por los siguientes motivos : <br>      ".$msg." <br><br> Deberá corregir y coordinar personalmente para realizar nuevamente su tramite en la plataforma PILAR. ";
          if($tram->IdTesista2 !=0)
            {
              $mail = $this->dbPilar->inCorreo( $tram->IdTesista1);
              $mail2 = $this->dbPilar->inCorreo( $tram->IdTesista2);
+             $cel= $this->dbPilar->inCelTesista( $tram->IdTesista1);
+             $cel2= $this->dbPilar->inCelTesista( $tram->IdTesista2);
              $this->logCorreo( $sess->userId, $mail, "Rechazo del Asesor", $msgEnviar );
              $this->logCorreo( $sess->userId, $mail2, "Rechazo del Asesor", $msgEnviar );
+             $a=$this->notiCelu($cel,1);
+               $a=$a." - ".$this->notiCelu($cel2,1);
            }
          else
            {
              $mail = $this->dbPilar->inCorreo( $tram->IdTesista1);
+             $cel= $this->dbPilar->inCelTesista( $tram->IdTesista1);
              $this->logCorreo( $sess->userId, $mail, "Rechazo del Asesor", $msgEnviar );
+             $a=$this->notiCelu($cel,1);
            }
          //---------------------FIN----------------------------
- 
+        $msg=$msg.$a;
          $this->logTramites( $tram->Id, "Rechazo del Asesor", $msgEnviar );
          echo "<br><b> Proyecto Rechazado </b><br>";
          echo "Se procede con notificar al tesista(s) para que subsane las observación o realice el cambio de asesor.";

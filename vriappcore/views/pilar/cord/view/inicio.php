@@ -53,8 +53,8 @@
 					<?php $lineas=$this->dbRepo->getTable("tblLineas","IdCarrera='$IdCarrera' ORDER BY Estado DESC, Nombre  ASC");
 						$i=1; 
 						foreach($lineas->result() as $row){
-							$nDoc=$this->dbPilar->getTable("docLineas","IdLinea=$row->Id");
-							$nTes=$this->dbPilar->getTable("tesTramites","IdLinea=$row->Id"); 
+							$nDoc=$this->dbPilar->getTable("docLineas","IdLinea=$row->Id AND estado='2'"); //se aumento que los docentes esten habilitados - unuv1.0
+							$nTes=$this->dbPilar->getTable("tesTramites","IdLinea=$row->Id AND Tipo = 1 and Estado<=8"); 
 							$estado='';
 							if($row->Estado==0) $estado="<br><small style='color:red;'>Esta Linea de Investigación se encuentra deshabilitada.</small>";
 

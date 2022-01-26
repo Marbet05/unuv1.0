@@ -1,8 +1,8 @@
 <!-- Modal content-->
 <div class="modal-content">
-	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal">&times;</button>
-		<h4 class="modal-title">Informacion Docente</h4>
+	<div class="modal-header" style="background: #920738; color:white">
+	  <button class="close" data-dismiss="modal" style="color:white">&times;</button>
+	  <h4 class="modal-title"> Informacion Docente  </h4>
 	</div>
 	<div class="modal-body">
 		<?php 
@@ -76,7 +76,7 @@
 			";
 
 		?>
-		<h5> Enviar Recordatorio de Actualización de Información : <button type="button" class="btn btn-xs btn-primary"> <span class="glyphicon glyphicon-envelope"></span> Enviar MSJ</button> </h5>
+		<!--<h5> Enviar Recordatorio de Actualización de Información : <button type="button" class="btn btn-xs btn-primary"> <span class="glyphicon glyphicon-envelope"></span> Enviar MSJ</button> </h5> -->
 	</div>
 	<div class="modal-footer">
 		<button type="button" class="btn btn-danger" data-dismiss="modal"> Cerrar</button>

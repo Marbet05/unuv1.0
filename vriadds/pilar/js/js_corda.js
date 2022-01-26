@@ -129,4 +129,15 @@ function popExeEnviar(val)
 			}
 		});	
 }
+//agregado unuv1.0
+function sndLoad( urlink, args, isin )
+{
+    if( isin==null ){
+        jVRI("#panelCord").html( lodmsg );
+        jVRI("#panelCord").load( urlink, args );
+    } else {
+        jVRI("#panelCord").html( lodmsg );
+        jVRI("#panelCord").load( urlink, args );
+    }
+}
 
