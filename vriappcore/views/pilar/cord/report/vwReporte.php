@@ -1,25 +1,29 @@
-<div class="container-fluid">
-	<h3>Reportes la Escuela Profesional:: <small><?php  echo $Carrera; ?></small></h3>
-	<div class="panel">
 
-		<div class="form-group hidden-print">
-			<form name="selRepo" id="selRepo" method='POST' accept-charset="utf-8">
-			<label class="col-md-4 control-label" for="selectbasic">Seleccione el Reporte:</label>
-			<div class="col-md-5">
-				<select id="option" name="option" class="form-control">
-					<option value="1">Evaluación Docente</option>
-					<option value="2">Estado Actual de la Carrera</option>
-					<option value="3">Resumen</option>
-				</select>
-			</div>
-			<div class="col-md-3">
-				<button class="form-control btn btn-sm btn-info" type="button" onclick="LoadForm('reporte','cordinads/selecrepo',selRepo)"> BUSCAR</button>
-			</div>
-			</form>
-		</div>
-		
-	</div>
-	<div class="container-fluid" id="reporte">
-		
-	</div>
+ <div class="container-fluid">
+  <h3>Reportes la Escuela Profesional:: <small><?php  echo $Carrera; ?></small></h3>
+  <div class="panel">
+    <table class="table">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Tipo de Reporte</th>
+        <th>Opción</th>
+      </tr>
+    </thead>
+  <tbody> 
+    <tr>
+      <td>1</td>
+      <td>Estado Actual de la Carrera  </td>
+      <td><a href="<?=base_url("pilar/cordinads/EstadoActualPilar")?>" class='btn btn-success btn-xs' target="_blank">Ver</a></td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Evaluacion de Docente </td>
+      <td><a href="javascript:void(0)"  onclick="lodPanel('panelCord','cordinads/vwReportesev')" class='btn btn-success btn-xs' >Ver</a></td>
+    </tr>
+    
+    </tbody>
+  </table>
+    
+  </div>
 </div>

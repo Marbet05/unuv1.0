@@ -802,7 +802,7 @@ class Tesistas extends CI_Controller {
 
         $pdf->Ln( 19 );
         $pdf->SetFont( "Arial", 'B', 14 );
-        $pdf->Cell( 174, 5, toUTF("ACTA DE APROBACIÓN DE PROYECTO DE TESIS"), 0, 1, 'C' );
+        $pdf->Cell( 174, 5, toUTF("CONSTANCIA DE ASESORAMIENTO"), 0, 1, 'C' );
 
 
         $dia = (int) substr( $tram->FechModif, 8, 2 );
@@ -893,6 +893,8 @@ class Tesistas extends CI_Controller {
         $pdf->Ln(8);
         $pdf->SetFont( "Arial", "B", 11 );
         $pdf->MultiCell( 174, 5.5, toUTF("Pucallpa, $mes de $ano"), 0, 'R' );
+        $pdf->Image( 'vriadds/pilar/imag/aprofirma.jpg', 75, 230, 80 );
+
 
         
         //$pdf->Image( 'vriadds/pilar/imag/aprofirma.jpg', 75, 230, 80 ); comentado unuv1.0 -aprobacion de proyecto
@@ -1203,8 +1205,7 @@ class Tesistas extends CI_Controller {
         //
         $msg = "<br>Se ha registrado el proyecto: <b>$codigo</b><br><br> "
              . "Título de Proyecto: <b>$titul</b> <br><br>"
-             . "Ud. debe comunicarse con su Asesor para "
-             . "que su proyecto sea evaluado."  ;
+             . "La comisión de GyT de su facultad tendra 7 dias calendarios para revisar el formato y otros criterios, antes de enviar su proyecto a su Asesor.";
 
 
         // agregar tramite
@@ -1217,13 +1218,19 @@ class Tesistas extends CI_Controller {
           {
             $mail = $this->dbPilar->inCorreo( $tesi1);
             $mail2 = $this->dbPilar->inCorreo( $tesi2);
+            $cel= $this->dbPilar->inCelTesista( $tesi1);
+            $cel2= $this->dbPilar->inCelTesista( $tesi2);
             $this->logCorreo( $tesi1, $mail, "Subida de Proyecto", $msg );
             $this->logCorreo( $tesi2, $mail2, "Subida de Proyecto", $msg );
+            $this->notiCelu($cel,2);
+            $this->notiCelu($cel2,2);
           }
         else
           {
-            $mail = $this->dbPilar->inCorreo($tesi1);
+            $cel= $this->dbPilar->inCelTesista( $tesi1);
+             $mail = $this->dbPilar->inCorreo( $tesi1);
             $this->logCorreo( $tesi1, $mail, "Subida de Proyecto", $msg );
+            $this->notiCelu($cel,2);
           }
         //---------------------FIN----------------------------       
 
@@ -1696,9 +1703,9 @@ class Tesistas extends CI_Controller {
 
 
             $msg = "<h3>Bienvenido</h3>"
-                 . "Sr(rta): <b>$data->Nombres $data->Apellis</b>.<br>"
+                 . "Estimad@ : <b>$data->Nombres $data->Apellis</b>.<br>"
                  . "Ud. ha concluido satisfactoriamente su inscripción en la  "
-                 . "Plataforma PILAR para el trámite electrónico de su "
+                 . "Plataforma PILAR para el trámite virtual de su "
                  . "proyecto y borrador de tesis, en calidad de "
                  . "egresado de la <b>UNU</b>."
                  . "<br><br><b>Datos de su Cuenta:</b><br>"
@@ -1709,8 +1716,9 @@ class Tesistas extends CI_Controller {
 
             // grabar en LOG de correos y enviamos mail
             $this->logCorreo( $myId, $mail, "Inscripción", $msg );
+            $this->notiCelu(mlSecurePost("celu"),1);
 
-            echo "Registro completo, revise su <b>e-mail</b>.";
+            echo "Registro completo, revise su <b>e-mail</b> y <b>celular</b.";
 
         } else {
             echo "Se guardo previamente";
@@ -1719,7 +1727,27 @@ class Tesistas extends CI_Controller {
         //print_r( $data );
         mlSetGlobalVar( "proRec", null );
     }
+ //Agregado unuv1.0
+public function notiCelu($cel,$tip)
+{
+    $this->load->library('apismss'); 
+    $number   = "0051$cel";
+    if($tip==1){ // Tesista : mensaje rechazo del proyecto
+       $mensaje  = "UNU -PILAR \nEstimad@ Tesista Ud. ha concluido satisfactoriamente su inscripción en la Plataforma PILAR para el tramite virtual de su proyecto y borrador de tesis, para mayor informacion de su cuenta creada revise su correo electronico.  \n\n".date("d-m-Y")."\nPlataforma PILAR.";
+    }
+    else
+    {
+        $mensaje  = "UNU -PILAR \nEstimad@ Tesista Ud. ha registrado su proyecto satisfactoriamente, la comisión de GyT de su facultad tendra 7 dias calendarios para revisar el formato y otros criterios, antes de enviar su proyecto a su Asesor,para mayor informacion de su proyecto registrado revise su correo electronico.  \n\n".date("d-m-Y")."\nPlataforma PILAR.";
+    }
 
+$result   = $this->apismss->sendMessageToNumber2($number,$mensaje);
+
+    if ($result) {
+       return "Mensaje Enviado al $number";
+    }else{
+       return  "Error al enviar mensaje : $number";
+    }
+}
 
     //
     // verificacion con OTI, dni, semestre, carrera, session
@@ -1821,7 +1849,7 @@ class Tesistas extends CI_Controller {
             );
 
             $idEspec = $arrEsp[ $data->matricula->especialidad ];
-        } //Modificado unuv1.0 */
+        } //comentado unuv1.0 */
 
 
         // mlSetGlobalVar( "proRec", Facultad, Carrera, DNI txt, Codigo, Datos )

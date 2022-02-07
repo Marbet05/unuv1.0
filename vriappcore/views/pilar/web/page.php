@@ -109,7 +109,8 @@
             <hr>
             <a target="_blank" href="<?php echo base_url("vriadds/pilar/doc/Manual de tesista PILAR - UNU.pdf");?>" class="list-group-item blink"><span class="glyphicon glyphicon-th-list"></span> Manual para Tesistas </a>
            <!-- <a href="#" class="list-group-item blink"><span class="glyphicon glyphicon-th-list"></span> Manual para Coordinadores</a> modificado unuv1.0-->
-          <!--  <a target="_blank" href="<?php echo base_url("/pilar/web/preguntas");?>" class="list-group-item blink"><span class="glyphicon glyphicon-th-list"></span> Preguntas frecuentes</a> modificado unuv1.0  -->
+           <hr>
+            <a target="_blank" href="<?php echo base_url("/pilar/web/preguntas");?>" class="list-group-item blink"><span class="glyphicon glyphicon-th-list"></span> Preguntas frecuentes</a>
           </ul>
         </div>
       </div>

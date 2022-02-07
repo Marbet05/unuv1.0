@@ -470,6 +470,50 @@ class GenSexPdf extends FPDF {
         }
         return $nl;
     }
+
+    function cabeceraHorizontal($cabecera)
+    {
+        $this->SetXY(20,90);
+        $this->SetFont('Arial','B',10);
+        $this->SetFillColor(2,157,116);//Fondo verde de celda
+        $this->SetTextColor(240, 255, 240);
+        foreach($cabecera as $fila)
+        {
+            //Atención!! el parámetro valor 0, hace que sea horizontal
+            $this->Cell(35,7, utf8_decode($fila),1, 0 , 'L',true );
+        }
+    }
+ 
+    function datosHorizontal($datos)
+    {
+        $this->SetXY(20,97);
+        $this->SetFont('Arial','',10);
+        $this->SetTextColor(3, 3, 3); //Color del texto: Negro
+        //Siendo un array tipo: $datos => $fila
+        //Significa que $datos tiene 'nombre' 'apellido' 'matricula'
+        //$fila tiene cada valor de los antes mencionados
+        foreach($datos as $fila)
+        {
+
+            $this->Cell(35,7, utf8_decode($fila[0]),1, 0 , 'L' );
+            $this->Cell(35,7, utf8_decode($fila[1]),1, 0 , 'L' );
+            $this->Cell(35,7, utf8_decode($fila[2]),1, 0 , 'L' );
+            $this->Cell(35,7, utf8_decode($fila[3]),1, 0 , 'L' );
+            $this->SetFont('Arial','B',10);
+            $this->Cell(35,7, utf8_decode($fila[4]),1, 0 , 'L' );
+            $this->SetFont('Arial','',10);
+            $this->Ln();//Salto de línea para generar otra fila
+        }
+    }
+ 
+    //Integrando cabecera y datos en un solo método
+    function tablaHorizontal($cabeceraHorizontal, $datosHorizontal)
+    {
+        $this->cabeceraHorizontal($cabeceraHorizontal);
+        $this->datosHorizontal($datosHorizontal);
+    }
 }
+
+
 
 ?>

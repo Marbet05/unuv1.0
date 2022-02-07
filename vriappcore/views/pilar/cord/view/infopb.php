@@ -12,12 +12,12 @@
 	<div class="modal-body">
 		<div>
 			<?php 
-				if ($tram->Tipo==1 && $tram->Estado<=2 ) {
+				if ($tram->Tipo==1 && $tram->Estado<=3 ) {
 					$doc1=$this->dbRepo->inDocente("$tram->IdJurado4");
 					echo "Asesor de Tesis: $doc1 <br>";
 					if($tram->IdTesista2)echo "<br><b class='text-danger'> NOTA : Este proyecto tiene 2 Tesistas</b>";
 				} else
-				if ($tram->Tipo>=1 and $tram->Estado>2){
+				if ($tram->Tipo>=1 and $tram->Estado>3){
 					$doc1=$this->dbRepo->inDocente("$tram->IdJurado4");
 					echo "Asesor de Tesis: $doc1 <br>";
 					if($tram->IdTesista2)echo "<br><b class='text-danger'> NOTA : Este proyecto tiene 2 Tesistas</b>";

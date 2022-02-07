@@ -153,9 +153,10 @@ function cargaProy(modo)
     var txt;
     if(modo==2)
     {
-        setTimeout(document.getElementById('mos').style.display='block',5000);
+        
         var codex = prompt("Ingrese el Código de su compañero", "");
         if (codex == null || codex == "") {
+            setTimeout(document.getElementById('mos').style.display='block',5000);
             if(codex == null)
             {
                 txt='';
@@ -172,7 +173,7 @@ function cargaProy(modo)
             jVRI.ajax({
                 url : "tesistas/ValidarCodigo/"+ codex, //(3.9.2)
                 success : function( arg ){
-                    if (!arg) 
+                    if (arg.trim()=='') 
                     {
                         jVRI.ajax({
                              url : "tesistas/loadRegProy/" + codex, //(3.9.3)
@@ -183,7 +184,8 @@ function cargaProy(modo)
                         });                        
                     }
                     else
-                    {                        
+                    {         
+                    setTimeout(document.getElementById('mos').style.display='block',5000);               
                         jVRI('#demo').html( arg );                         
                     }
                 }

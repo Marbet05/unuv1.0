@@ -739,6 +739,54 @@ public function vwReportes(){
    ));
 }
 
+//agregado unuv1.0
+
+public function EstadoActualPilar(){
+  $carre = mlGetGlobalVar("IdCarrera"); 
+   $carrera=$this->dbRepo->inCarrera($carre);
+  $facultad=$this->dbRepo->inFacultad($carre);
+  $idFac = $this->dbRepo->inIdFacultad($carre);
+  $pdf = new GenSexPdf();
+   $pdf->SetMargins(20, 16, 20);
+   $pdf->AddPageEx2('P','A4',1,10, $facultad , $carrera, $idFac);
+   $pdf->SetFont('Arial','B',14);
+   $pdf->Cell(170,7,toUTF("REPORTE DEL ESTADO ACTUAL DE PILAR"),0,1,'C');
+  $pdf->Ln(5);// Salto de Lineaaa
+  $pdf->SetFont('Arial','',11);
+  $pdf->MultiCell(170,7,toUTF("La Plataforma de Investigación Integrada a la Labor Académica con Responsabilidad"
+     . " (PILAR), mediante el presente expide la información registrada en su base de datos del estado actual de la escuela profesional $carrera con la siguiente información:"));
+  $pdf->Ln(100);  
+  $miCabecera = array('Tramite','Rechazado', 'En curso', 'Aprobados','Total');
+  $pyaprob = $this->dbPilar->getTable("tesTramites","IdCarrera=$carre AND Estado=8") ->num_rows();
+  $curproy = $this->dbPilar->getTable("tesTramites","IdCarrera=$carre AND Tipo=1 AND Estado<8")  ->num_rows();
+  $rechaza = $this->dbPilar->getTable("tesTramites","IdCarrera=$carre AND Tipo=0 AND Estado<8")  ->num_rows();
+ 
+  $misDatos = array(
+            array('Proyectos de Tesis',$rechaza,$curproy, $pyaprob,($rechaza+$curproy+$pyaprob)),
+            array('Borradores de Tesis','0','0','0',''),
+            array('Sustentaciones','0','0','0','')
+            );
+ 
+  $pdf->tablaHorizontal($miCabecera, $misDatos);       
+         
+  $fecha=getdate();
+  $pdf->Ln(7);
+  $pdf->cell(170,5,"$fecha[mday] - $fecha[month] - $fecha[year]",0,1,'L');
+  $pdf->cell(170,5,toUTF("Plataforma de Investigación y Desarrollo") ,0,1,'L');
+
+  $pdf->Output();
+}
+
+//agregado unuv1.0
+
+public function vwReportesev()
+{
+  $carre = mlGetGlobalVar("IdCarrera");
+    $this->load->view("pilar/cord/report/1rpEvalDocente",array(
+        'list'=>$this->dbRepo->getTable("tblDocentes","IdCarrera=$carre AND Activo>0"),
+      ));
+}
+
 public function selecrepo(){ 
    $carre = mlGetGlobalVar("IdCarrera");
    $op=mlSecurePost('option');
@@ -853,12 +901,16 @@ public function memoriaAnual(){
 
 public function EvalDocenteAnio($id,$anio){
 
-   $pdf = new GenSexPdf();
+   $carre = mlGetGlobalVar("IdCarrera"); 
+   $carrera=$this->dbRepo->inCarrera($carre);
+  $facultad=$this->dbRepo->inFacultad($carre);
+  $idFac = $this->dbRepo->inIdFacultad($carre);
+  $pdf = new GenSexPdf();
    $pdf->SetMargins(20, 16, 20);
-   $pdf->AddPage();
+  $pdf->AddPageEx2('P','A4',1,10, $facultad , $carrera, $idFac);
    $pdf->SetFont('Arial','B',14);
    $pdf->Cell(170,7,toUTF("REPORTE DOCENTE EN PILAR"),0,1,'C');
-$pdf->Ln(5);// Salto de Lineaaa
+  $pdf->Ln(5);// Salto de Lineaaa
 $pdf->SetFont('Arial','',11);
 $pdf->MultiCell(170,7,toUTF("La Plataforma de Investigación Integrada a la Labor Académica con Responsabilidad"
    . " (PILAR), mediante el presente expide la información registrada en su base de datos del Docente Universitario con la siguiente información:"));
@@ -886,9 +938,11 @@ $state=array(
    1=>"Proyecto : Revisión de formato",
    2=>"Proyecto : En revisión por el Asesor",
    3=>"Proyecto : Listo para sorteo",
-   4=>"Proyecto : En Revisión por Jurados",
-   5=>"Proyecto : En Dictaminación",
-   6=>"Proyecto : Proyecto Aprobado",
+   4=>"Proyecto : En Revisión por Jurados 1",
+   5=>"Proyecto : En Revisión por Jurados 2",
+   6=>"Proyecto : En Revisión por Jurados 3",
+   7=>"Proyecto : En Dictaminación",
+   8=>"Proyecto : Proyecto Aprobado",
    10=>"Borrador : En espera a la carga de borrador",
    11=>"Borrador : En revisón de formato de borrador",
    12=>"Borrador : En revisión por Jurados",

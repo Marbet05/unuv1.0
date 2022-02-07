@@ -54,7 +54,7 @@
 
                         echo "<div class='alert alert-success'>";
                          if( $row->Tipo == 0 )
-                            echo "Trámite <b>$row->Codigo : (Rechazado)</b>: iteracion: ".$dets->Iteracion." , desde $dets->Fecha";
+                            echo "Trámite <b>$row->Codigo : (Rechazado)</b> desde $dets->Fecha";
                         if( $row->Tipo == -2 )
                             echo "Trámite <b>$row->Codigo : (Caducado)</b>: Por haber excedido el tiempo de ejecución, transcurrieron <b>$dias de 730</b> (2 años) dias desde $dets->Fecha";
                         if( $row->Tipo == -1 )

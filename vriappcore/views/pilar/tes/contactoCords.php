@@ -13,7 +13,7 @@
 			<h4>Información de Contacto</h4>
 		</div>
 		<div class="col-md-9">
-			<h4 class="title">COORDINACION DE GRADOS Y TITULOS</h4>
+			<h4 class="title">COMISION DE GRADOS Y TITULOS</h4>
 
 			<table class="table table-striped">
 				 <tr>

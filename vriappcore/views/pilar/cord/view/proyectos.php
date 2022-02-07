@@ -194,7 +194,7 @@
   <div class="modal-content">
 	<div class="modal-header" style="background: #920738; color:white">
 	  <button class="close" data-dismiss="modal" style="color:white">&times;</button>
-	  <h4 class="modal-title"> Coordinador </h4>
+	  <h4 class="modal-title"> COMISION GYT </h4>
 	</div>
   <form name="fX" id="fX" method="post">
 	<div class="modal-body" id="vwCorrs" style="font-size:13px">

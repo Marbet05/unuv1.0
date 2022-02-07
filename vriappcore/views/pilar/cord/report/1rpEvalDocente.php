@@ -6,6 +6,8 @@
 	// }
  ?> -->
 <br>
+<center><h3>Reportes de Evaluacion de Docente</h3>
+</center>
  <table class="table table-bordered">
 		<thead>
 			<tr>
@@ -31,9 +33,9 @@
 						<td>$row->Apellidos , $row->Nombres</td>
 						<td align='center'>
 						
-						<a href='".base_url("pilar/cordinads/EvalDocente/$row->Id")."' target=_blank class='btn btn-info btn-xs'>Reporte</a>
-						<a href='".base_url("pilar/cordinads/EvalDocenteAnio/$row->Id/2018")."' target=_blank class='btn btn-info btn-xs'>Reporte 2018</a>
-						<a href='".base_url("pilar/cordinads/EvalDocenteAnio/$row->Id/2019")."' target=_blank class='btn btn-success btn-xs'>Reporte 2019</a>
+						<a href='".base_url("pilar/cordinads/EvalDocenteAnio/$row->Id/2021")."' target=_blank class='btn btn-info btn-xs'>Reporte 2021</a>
+						<a href='".base_url("pilar/cordinads/EvalDocenteAnio/$row->Id/2022")."' target=_blank class='btn btn-success btn-xs'>Reporte 2022</a>
+
 
 						</td>
 					  </tr>";
